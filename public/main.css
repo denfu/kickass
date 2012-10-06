@@ -1,0 +1,28 @@
+/* CSS declarations go here */
+
+.kicker {
+margin: 10px;
+padding: 10px;
+border: 2px solid;
+width: 400px;
+}
+
+.slide {
+  position: relative;
+}
+.slide .inner {
+  width: 85% !important;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.ui-block-a {
+  
+  z-index: 1000;
+}
+
+div.ui-grid-a div.ui-block-b {
+  width: 100%;
+}
+

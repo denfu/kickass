@@ -1,0 +1,93 @@
+
+<head> 
+	<title>KickAss</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="jquery.min.css" />
+	<!--<link type="text/css" rel="stylesheet" media="screen" href="sidetap.css" />
+    <link type="text/css" rel="stylesheet" media="screen" href="default.css" />-->
+</head> 
+
+<body> 
+
+	<div data-role="page">
+		<div id="slidebottom" class="slide">
+			
+				{{> tContent}}
+			
+		</div>
+	</div>
+</body>
+
+
+<template name="tContent">
+	<div id="kacontent">
+			{{#unless isLoggedIn}}
+				<div data-role="header" id="header">
+					<h1>login</h1>
+				</div>
+				
+				<div data-role="content">
+					{{#unless isLoggedIn}}
+						{{> tLogin }}
+					{{/unless}}
+				</div>
+			{{/unless}}
+			
+			{{#if isLoggedIn}}
+				{{> tPanel }}
+				
+			{{/if}}
+			
+		
+	</div>
+</template>
+
+<template name="tPanel">
+	
+				<div class="ui-grid-a">
+					<div class="ui-block-a inner">
+						<ul data-role="listview">
+							<li><a href="acura.html">Acura</a></li>
+							<li><a href="audi.html">Audi</a></li>
+							<li><a href="bmw.html">BMW</a></li>
+						</ul>
+					</div>
+					<div class="ui-block-b">
+						<div data-role="header">
+							<a href="#" id="menu" data-icon="option">Menu</a>
+							
+							<h1>kickass</h1>
+							
+							<a href="#" data-icon="delete" id="logout">logout</a>
+						</div>
+						<div data-role="content">
+							some content...
+						</div>
+					</div>	   
+				</div>	
+</template>
+
+<template name="tLogin">
+	<div class="c_tLogin" id="tLogin">
+		<div data-role="collapsible" data-theme="a" data-content-theme="a" id="login" class="login">
+				<h3>New Kicker</h3>
+				<label for="name">Name:</label>
+				<input type="text" name="name" id="name" value="" />
+				<label for="pwd">Password:</label>
+				<input type="password" name="pwd" id="pwd" value="" />
+				<input type="submit" name="name" id="submitNewPlayer" value="Speichern und Anmelden" />
+		</div>
+		<ul data-role="listview" data-inset="true" data-filter="true" id="playerlistlogin">	
+				
+		{{#each getPlayers}}			
+			{{> tPlayerShort }}		  
+		{{/each}}
+		</ul>
+	</div>
+	
+	
+	
+</template>
+
+
+

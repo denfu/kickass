@@ -1,0 +1,62 @@
+<template name="kicker">
+	<div class="kicker">
+		<div class="red_side">
+			<div class="keeper">keeper</div>
+			<div class="keeper">striker</div>
+		</div>
+		<div class="blue_side">
+			<div class="keeper">keeper</div>
+			<div class="keeper">striker</div>
+		</div>
+	</div>
+</template>
+
+<template name="accountchoose">
+	<span>who are u? | not in the list: 
+		<input id="newplayer" type="text" class="new_keeper"/>
+		<input type="button" class="newplayer" value="That's me!" />
+		<input type="button" class="test" value="Tell Androids" />
+	</span>
+</template>
+
+<template name="playerlist">
+<div class="playerlist">
+    {{#each players}}
+      {{> player}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="loggedin">
+<div class="loggedin">
+	Logged: <br/>
+    {{#each getLogged}}
+      {{> logged}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="logged">
+  <div class="logged">
+    <span class="name">{{player}}</span>
+    <span class="session">{{session}}</span>
+  </div>
+</template>
+
+<template name="player_details">
+  <div class="player_details">
+  Details:
+    <span class="name">{{name}}</span>
+  </div>
+</template>
+
+<!-- new -->
+
+<!-- A short description of a player -->
+<template name="tPlayerShort">
+  <li><a href="#" id="{{_id}}" class="login">{{name}}</a></li>
+</template>
+
+
+
+
