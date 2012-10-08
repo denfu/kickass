@@ -34,16 +34,14 @@ var toggleNav = function () {
 
 if (Meteor.is_client) {
 	
+	
 	Template.tPanel.rendered = function () {
 		$('.inner').css('left',-$('.inner').width());
 		
 	}
 	
 	
-	Template.tPanel.events = {
-	
-	}
-	
+
 	
 	Template.tPanel.events = {
 		'click a#logout': 	function (e) {
@@ -109,18 +107,7 @@ if (Meteor.is_client) {
 		return !!Session.get("selected_player");
 	};
 	
-	Template.tContent.isLoggedIn2 = function () {
-		//Session.get("selected_player");
-		var id = getCookie("ka");
-		if (id !== undefined) {
-			var logged = LoggedIn.findOne({"player._id":id});
-			if (logged) {
-				Session.set("selected_player", logged.player);
-			}
-			//return logged !== undefined;
-		}
-		return !!Session.get("selected_player");
-	};
+
 	
 	Template.playerlist.players = function () {
 	 return Players.find({}, {sort: {name: 1}});
