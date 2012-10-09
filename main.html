@@ -17,6 +17,21 @@
 		</div>
 	</div>
 	
+	<div data-role="page" id="bar" data-title="Page Foo">
+
+	<div data-role="header">
+		<h1>Bar</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+		<p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>		
+		<p><a href="#foo">Back to foo</a></p>	
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div>
 
 	
 </body>
@@ -42,8 +57,6 @@
 				{{> tPanel }}
 				
 			{{/if}}
-			
-		
 	</div>
 </template>
 
@@ -52,7 +65,7 @@
 				<div class="ui-grid-a">
 					<div class="ui-block-a inner">
 						<ul data-role="listview">
-							<li><a href="acura.html">Game</a></li>
+							<li><a href="#bar" data-transition="slide">Game</a></li>
 							<li><a href="audi.html">Players</a></li>
 							<li><a href="bmw.html">Highscore</a></li>
 						</ul>
@@ -63,7 +76,7 @@
 							
 							<h1>kickass</h1>
 							
-							<a href="#" data-icon="delete" id="logout">logout</a>
+							<a href="#" data-icon="grid" id="logout" data-corners="false">logout</a>
 						</div>
 						<div data-role="content">
 							some content...

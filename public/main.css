@@ -29,3 +29,7 @@ div.ui-grid-a div.ui-block-b {
 div.ui-block-a ul li {
   margin-left:0px !important;
 }
+
+div.ui-block-a  {
+  top:0px !important;
+}
