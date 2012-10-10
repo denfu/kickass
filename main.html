@@ -12,78 +12,65 @@
 	<div data-role="page">
 		<div id="slidebottom" class="slide">
 			
-				{{> tContent}}
+			{{> tPage}}
 			
 		</div>
 	</div>
-	
-	<div data-role="page" id="bar" data-title="Page Foo">
 
-	<div data-role="header">
-		<h1>Bar</h1>
-	</div><!-- /header -->
-
-	<div data-role="content">	
-		<p>I'm the second in the source order so I'm hidden when the page loads. I'm just shown if a link that references my id is beeing clicked.</p>		
-		<p><a href="#foo">Back to foo</a></p>	
-	</div><!-- /content -->
-
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
-</div>
-
-	
 </body>
 
 
 
 
-<template name="tContent">
-	<div id="kacontent">
-			{{#unless isLoggedIn}}
-				<div data-role="header" id="header">
-					<h1>login</h1>
+<template name="tPage">
+	<div id="kacontent">	
+		<div class="ui-grid-a">
+			<div class="ui-block-a inner">
+				<ul data-role="listview" id="navbar">
+					<li><a href="#game" data-transition="slide">Game</a></li>
+					<li><a href="#highscore">Highscore</a></li>
+					<li><a href="#credit">Credit</a></li>
+				</ul>
+			</div>
+			<div class="ui-block-b">
+				<div data-role="header">
+					{{#if isLoggedIn}}
+					<a href="#" id="menu" data-icon="option">Menu</a>			
+					{{/if}}	
+					<h1>kickass</h1>
+					{{#if isLoggedIn}}
+					<a href="#" data-icon="grid" id="logout" data-corners="false">logout</a>
+					{{/if}}	
 				</div>
-				
 				<div data-role="content">
-					{{#unless isLoggedIn}}
-						{{> tLogin }}
-					{{/unless}}
+					{{> tPageSwitch}}									
 				</div>
-			{{/unless}}
-			
-			{{#if isLoggedIn}}
-				{{> tPanel }}
-				
-			{{/if}}
+			</div>	   
+		</div>	
 	</div>
 </template>
 
-<template name="tPanel">
-	
-				<div class="ui-grid-a">
-					<div class="ui-block-a inner">
-						<ul data-role="listview">
-							<li><a href="#bar" data-transition="slide">Game</a></li>
-							<li><a href="audi.html">Players</a></li>
-							<li><a href="bmw.html">Highscore</a></li>
-						</ul>
-					</div>
-					<div class="ui-block-b">
-						<div data-role="header">
-							<a href="#" id="menu" data-icon="option">Menu</a>
-							
-							<h1>kickass</h1>
-							
-							<a href="#" data-icon="grid" id="logout" data-corners="false">logout</a>
-						</div>
-						<div data-role="content">
-							some content...
-						</div>
-					</div>	   
-				</div>	
+
+
+
+
+<template name="tPageSwitch">
+	{{#unless isLoggedIn}}
+		{{> tLogin }}
+	{{/unless}}
+	{{#if isLoggedIn}}
+		{{#if isPage "game"}}
+			gamepage
+		{{/if}}
+		{{#if isPage "highscore"}}
+			hightscore
+		{{/if}}		
+		{{#if isPage "credit"}}
+			Dennis Fuhrmann
+		{{/if}}	
+	{{/if}}		
 </template>
+
 
 <template name="tLogin">
 	<div class="c_tLogin" id="tLogin">
