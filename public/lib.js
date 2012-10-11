@@ -20,18 +20,29 @@ var Player = {
 	createPlayer: 	function(name) {
 						if (Players.findOne({name: name})) return;
 						
-						var player = {name: name, games: []};
-						Players.insert(player);
-						//Session.set("numPlayer",Players.find({}).count());
+						var player = {name: name, games: [], won:0, lost:0, draw:0, online: false, state: "meteor rules"};
+						Players.insert(player);						
 						return player;
 					},
 	deletePlayer:	function(playerToDelete) {
 						Players.remove({name:playerToDelete});
 						//Session.set("numPlayer",Players.find({}).count());
+					},
+	getAllPlayers:	function(sortObject) {
+						sortObject = sortObject? sortObject : {name: 1}; 
+						var p = Players.find({}, {sort: sortObject});	
+						return p;		
+					},
+	getPlayer:		function(name) {
+						return Players.findOne({name: name});
+					},
+	updatePlayer:	function(player) {
+						Players.update({_id:player._id}, player);	
 					}
 
 }
 
+// Nur Beispielhaft:
 var createGame = function(redKeeper, redAttack, blueKeeper, blueAttack) {
 
 	var game = {

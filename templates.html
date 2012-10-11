@@ -1,4 +1,4 @@
-<template name="kicker">
+<template name="tKicker">
 	<div class="kicker">
 		<div class="red_side">
 			<div class="keeper">keeper</div>
@@ -11,50 +11,40 @@
 	</div>
 </template>
 
-<template name="accountchoose">
-	<span>who are u? | not in the list: 
-		<input id="newplayer" type="text" class="new_keeper"/>
-		<input type="button" class="newplayer" value="That's me!" />
-		<input type="button" class="test" value="Tell Androids" />
-	</span>
-</template>
 
-<template name="playerlist">
-<div class="playerlist">
-    {{#each players}}
-      {{> player}}
-    {{/each}}
-  </div>
-</template>
 
-<template name="loggedin">
-<div class="loggedin">
-	Logged: <br/>
-    {{#each getLogged}}
-      {{> logged}}
-    {{/each}}
-  </div>
-</template>
 
-<template name="logged">
-  <div class="logged">
-    <span class="name">{{player}}</span>
-    <span class="session">{{session}}</span>
-  </div>
-</template>
-
-<template name="player_details">
-  <div class="player_details">
-  Details:
-    <span class="name">{{name}}</span>
-  </div>
-</template>
-
-<!-- new -->
+<!-- Player -->
 
 <!-- A short description of a player -->
 <template name="tPlayerShort">
   <li><a href="#" id="{{_id}}" class="login">{{name}}</a></li>
+</template>
+
+
+<template name="tPlayerHighscore">
+	<li>
+		<a href="#" id="{{_id}}" class="login">
+			
+			<h3 class="ui-li-heading">{{name}}</h3>
+			
+			<p class="ui-li-desc"><strong>Won: </strong>{{won}} <strong>Lost: </strong>{{lost}}</p>
+			
+			<p class="ui-li-desc">{{state}}</p>
+			<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">{{won}}</span>
+			<!--<p class="ui-li-aside"> rechts oben -->
+			<p>
+				<i>
+					{{#if online}}
+						<span style="color:green">online</span>
+					{{/if}}
+					{{#unless online}}
+						<span style="color:red">offline</span>
+					{{/unless}}
+				</i>
+			</p> 
+		</a>
+	</li>
 </template>
 
 

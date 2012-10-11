@@ -26,20 +26,26 @@
 	<div id="kacontent">	
 		<div class="ui-grid-a">
 			<div class="ui-block-a inner">
-				<ul data-role="listview" id="navbar">
-					<li><a href="#game" data-transition="slide">Game</a></li>
-					<li><a href="#highscore">Highscore</a></li>
-					<li><a href="#credit">Credit</a></li>
+				<ul data-role="listview" id="navbar" data-theme="a">
+					<li data-icon="false"><a href="#game" data-transition="slide">Game</a></li>
+					<li data-icon="false"><a href="#highscore">Highscore</a></li>
+					<li data-icon="false"><a href="#credit">Credit</a></li>
 				</ul>
 			</div>
 			<div class="ui-block-b">
 				<div data-role="header">
 					{{#if isLoggedIn}}
-					<a href="#" id="menu" data-icon="option">Menu</a>			
+						<a href="#" id="menu" data-icon="option">Menu</a>			
 					{{/if}}	
-					<h1>kickass</h1>
+					<h1>
 					{{#if isLoggedIn}}
-					<a href="#" data-icon="grid" id="logout" data-corners="false">logout</a>
+						{{getPageName}}
+					{{else}}
+						Login
+					{{/if}}						
+					</h1>
+					{{#if isLoggedIn}}
+						<a href="#" data-icon="grid" id="logout" data-corners="false">Logout</a>
 					{{/if}}	
 				</div>
 				<div data-role="content">
@@ -51,24 +57,30 @@
 </template>
 
 
-
-
-
 <template name="tPageSwitch">
 	{{#unless isLoggedIn}}
 		{{> tLogin }}
 	{{/unless}}
 	{{#if isLoggedIn}}
 		{{#if isPage "game"}}
-			gamepage
+			{{> tKicker }}
 		{{/if}}
 		{{#if isPage "highscore"}}
-			hightscore
+			{{> tHighscore }}
 		{{/if}}		
 		{{#if isPage "credit"}}
 			Dennis Fuhrmann
 		{{/if}}	
 	{{/if}}		
+</template>
+
+
+<template name="tHighscore">
+	<ul data-role="listview" data-inset="true" data-filter="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow" id="playerlistlogin">	
+		{{#each getPlayers}}
+			{{> tPlayerHighscore }}		
+		{{/each}}
+	</ul>
 </template>
 
 
@@ -89,7 +101,6 @@
 		{{/each}}
 		</ul>
 	</div>
-	
 </template>
 
 

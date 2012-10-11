@@ -33,15 +33,25 @@ var toggleNav = function ()
 	});			
 }
 
-var logPlayIn = function(id) {
+var logPlayerIn = function(id) {
 	//login:
 	var player = Players.findOne({_id:id});
+	player.online = true;
 	Session.set("selected_player", player);
+	Player.updatePlayer(player);
 	setCookie("ka", id);
 	var invalidateTime = new Date();
 	invalidateTime.addMinutes(5);
 	LoggedIn.insert({player: player, time:invalidateTime});		
 	Session.set("selected_page", "highscore");
+}
+
+var logPlayerOut = function() {
+	var player = Session.get("selected_player");
+	player.online = false;
+	LoggedIn.remove({"player._id": player._id});
+	Player.updatePlayer(player);
+	Session.set("selected_player", undefined);
 }
 
 if (Meteor.is_client) {
@@ -55,14 +65,12 @@ if (Meteor.is_client) {
 		
 		$("#playerlistlogin").listview("refresh");
 		//TODO: nach server:
-		LoggedIn.remove({time: {$lt:new Date()}});		
+		LoggedIn.find({time: {$lt:new Date()}});		//TODO: online status false
 	}
 	
 	Template.tPage.events = {
-		'click a#logout': 	function (e) {
-			var player = Session.get("selected_player");
-			LoggedIn.remove({"player._id": player._id});
-			Session.set("selected_player", undefined);			
+		'click a#logout': 	function () {
+			logPlayerOut();						
 		},
 		'click a#menu': function(e) {
 			nav_toggled = true;
@@ -83,6 +91,11 @@ if (Meteor.is_client) {
 		}
 	};	
 	
+	Template.tPage.getPageName = function () {
+		return Session.get("selected_page");
+	}
+	
+	
 	Template.tPage.isLoggedIn = function () {
 		var id = getCookie("ka");
 		if (id !== undefined) {
@@ -94,6 +107,15 @@ if (Meteor.is_client) {
 		}
 		return !!Session.get("selected_player");
 	};
+	
+	/**** TEMPLATE: tHighscore ****/
+	
+	Template.tHighscore.getPlayers = function() {
+		return Player.getAllPlayers({won:-1});
+	}
+	
+	
+	
 	
 	/**** TEMPLATE: tPageSwitch ****/
 	Template.tPageSwitch.isLoggedIn = function() {
@@ -107,15 +129,14 @@ if (Meteor.is_client) {
 	
 	/**** TEMPLATE: tLogin ****/
 	Template.tLogin.getPlayers = function () {
-		var p = Players.find({}, {sort: {name: 1}});	
-		return p;		
+		return Player.getAllPlayers();	
 	};
 	
  
 	Template.tLogin.events = {
 		'click a.login': 	function (e) {
 			var id = e.target.id;
-			logPlayIn(id);			
+			logPlayerIn(id);			
 		},
 		'click input#submitNewPlayer': 	function (e) {
 			var form = $(e.target).parents().find('div#login');
