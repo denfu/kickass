@@ -36,20 +36,24 @@ var toggleNav = function ()
 var logPlayerIn = function(id) {
 	//login:
 	var player = Players.findOne({_id:id});
+	var invalidateTime = new Date();
+	invalidateTime.addMinutes(2);
 	player.online = true;
+	player.lastLogin = new Date();
+	player.invalidateTime = invalidateTime;
 	Session.set("selected_player", player);
 	Player.updatePlayer(player);
 	setCookie("ka", id);
-	var invalidateTime = new Date();
-	invalidateTime.addMinutes(5);
-	LoggedIn.insert({player: player, time:invalidateTime});		
-	Session.set("selected_page", "highscore");
+	
+	//LoggedIn.insert({player: player, time:invalidateTime});		
+	Session.set("selected_page", player.lastPage);
 }
 
 var logPlayerOut = function() {
 	var player = Session.get("selected_player");
 	player.online = false;
-	LoggedIn.remove({"player._id": player._id});
+	player.invalidateTime = new Date();
+	//LoggedIn.remove({"player._id": player._id});
 	Player.updatePlayer(player);
 	Session.set("selected_player", undefined);
 }
@@ -65,7 +69,7 @@ if (Meteor.is_client) {
 		
 		$("#playerlistlogin").listview("refresh");
 		//TODO: nach server:
-		LoggedIn.find({time: {$lt:new Date()}});		//TODO: online status false
+		//LoggedIn.find({time: {$lt:new Date()}});		//TODO: online status false
 	}
 	
 	Template.tPage.events = {
@@ -87,7 +91,8 @@ if (Meteor.is_client) {
 		'click ul#navbar a': 	function (e) {
 			var page = e.target.href.substr(e.target.href.indexOf('#')+1, e.target.href.size);
 			toggleNav();
-			Session.set("selected_page", page);
+			var p = Session.get("selected_player");
+			Player.changePage(p, page);			
 		}
 	};	
 	
@@ -99,14 +104,27 @@ if (Meteor.is_client) {
 	Template.tPage.isLoggedIn = function () {
 		var id = getCookie("ka");
 		if (id !== undefined) {
-			var logged = LoggedIn.findOne({"player._id":id});
+			//var logged = LoggedIn.findOne({"player._id":id});
+			//Players.findOne({invalidateTime: {$lt:new Date()}});
+			var logged = Players.findOne({_id:id, online: true});
 			if (logged) {
-				Session.set("selected_player", logged.player);
+				Session.set("selected_player", logged);
 				return true;
 			}
 		}
 		return !!Session.get("selected_player");
 	};
+	
+	
+	Template.tPageSwitch.getPlayer = function() {
+		var p = Session.get("selected_player");
+		return Player.getPlayer(p.name);
+	}
+	
+	/**** TEMPLATE: tProfile ****/
+	
+	
+	
 	
 	/**** TEMPLATE: tHighscore ****/
 	
@@ -144,7 +162,8 @@ if (Meteor.is_client) {
 			var name = form.find('input#name').val();
 			var ret = Player.createPlayer(name, pwd);
 			if (ret) {
-				Session.set("selected_player", ret);						
+				logPlayerIn(ret._id);
+				//Session.set("selected_player", ret);						
 			} else {
 				console.log("bereits vorhanden");
 			}	

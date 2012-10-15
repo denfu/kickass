@@ -29,7 +29,7 @@
 				<ul data-role="listview" id="navbar" data-theme="a">
 					<li data-icon="false"><a href="#game" data-transition="slide">Game</a></li>
 					<li data-icon="false"><a href="#highscore">Highscore</a></li>
-					<li data-icon="false"><a href="#credit">Credit</a></li>
+					<li data-icon="false"><a href="#profile">Profile</a></li>
 				</ul>
 			</div>
 			<div class="ui-block-b">
@@ -68,12 +68,44 @@
 		{{#if isPage "highscore"}}
 			{{> tHighscore }}
 		{{/if}}		
-		{{#if isPage "credit"}}
-			Dennis Fuhrmann
+		{{#if isPage "profile"}}
+			{{#with getPlayer}}
+				{{> tProfile }}
+			{{/with}}
 		{{/if}}	
 	{{/if}}		
 </template>
 
+<template name="tProfile">
+	<ul data-role="listview" data-inset="true">
+		<li data-role="fieldcontain">
+			<label for="name" class="ui-input-text">Name:</label>
+			<input type="text" name="name" id="name" placeholder="{{name}}" value="" ></input>			
+		</li>
+		
+		<li data-role="fieldcontain">
+			<div data-role="fieldcontain">
+				<label for="state">State:</label>
+				<textarea name="textarea" id="state">{{state}}</textarea>
+			</div>	
+		</li>
+		<li data-role="fieldcontain">
+						
+		</li>
+		<li>
+		
+			<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup">
+				   <legend>Agree to the terms:</legend>
+				   <input type="checkbox" name="checkbox-2" id="checkbox-2" class="custom" />
+				   <label for="checkbox-2">I agree</label>
+				</fieldset>
+			</div>
+		</li>
+		
+		<li><button type="submit" name="submit" value="submit" data-theme="b" class="ui-btn-hidden" aria-disabled="false">Save</button></li>
+	</ul>
+</template>
 
 <template name="tHighscore">
 	<ul data-role="listview" data-inset="true" data-filter="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow" id="playerlistlogin">	

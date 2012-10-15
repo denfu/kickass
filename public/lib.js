@@ -3,6 +3,8 @@ Games = new Meteor.Collection("games");
 LoggedIn = new Meteor.Collection("loggedin");
 //APA91bESXISqHtFdxmP3ET8cmj45YoMuEZDP1FjoxYOjYrbnPCwlQOHCcV-DEd6A0_0_MYwFb3sif7jDYvpPbXTMsBcfDg66lTCv6BZCub9VN00wG669OLFgI0OA8EYacv7Fp8r8I6noq1sPKRP9F_gRHxKrKA48Lw
 
+var START_PAGE = "game";
+
 Date.prototype.addHours= function(h){
     this.setHours(this.getHours()+h);
     return this;
@@ -19,10 +21,23 @@ Date.prototype.addMinutes = function(m){
 var Player = {
 	createPlayer: 	function(name) {
 						if (Players.findOne({name: name})) return;
-						
-						var player = {name: name, games: [], won:0, lost:0, draw:0, online: false, state: "meteor rules"};
-						Players.insert(player);						
-						return player;
+						var _invalidateTime = new Date();
+						_invalidateTime.addMinutes(5);
+	
+						var player = {
+							name: name, 
+							games: [], 
+							won:0, 
+							lost:0, 
+							draw:0, 
+							online: false, 
+							state: "meteor rules!", 
+							lastLogin:new Date(), 
+							invalidateTime: _invalidateTime, 
+							lastPage: START_PAGE							
+						};
+						Players.insert(player);							
+						return Player.getPlayer(name);
 					},
 	deletePlayer:	function(playerToDelete) {
 						Players.remove({name:playerToDelete});
@@ -38,9 +53,21 @@ var Player = {
 					},
 	updatePlayer:	function(player) {
 						Players.update({_id:player._id}, player);	
+					},
+	changePage: function(player, page) {
+						Session.set("selected_page", page);
+						
+						var _invalidateTime = new Date();
+						_invalidateTime.addMinutes(5);
+						
+						player.invalidateTime = _invalidateTime;
+						player.lastPage = page;
+						Players.update({_id:player._id}, player);
 					}
 
 }
+
+
 
 // Nur Beispielhaft:
 var createGame = function(redKeeper, redAttack, blueKeeper, blueAttack) {
