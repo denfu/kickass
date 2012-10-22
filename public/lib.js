@@ -1,21 +1,9 @@
 Players = new Meteor.Collection("players");
 Games = new Meteor.Collection("games");
-LoggedIn = new Meteor.Collection("loggedin");
+
 //APA91bESXISqHtFdxmP3ET8cmj45YoMuEZDP1FjoxYOjYrbnPCwlQOHCcV-DEd6A0_0_MYwFb3sif7jDYvpPbXTMsBcfDg66lTCv6BZCub9VN00wG669OLFgI0OA8EYacv7Fp8r8I6noq1sPKRP9F_gRHxKrKA48Lw
 
 var START_PAGE = "game";
-
-Date.prototype.addHours= function(h){
-    this.setHours(this.getHours()+h);
-    return this;
-}
-
-Date.prototype.addMinutes = function(m){
-    this.setMinutes(this.getMinutes()+m);
-    return this;
-}
-
-
 
 
 var Player = {
@@ -67,6 +55,12 @@ var Player = {
 
 }
 
+var Page = {
+	change: function(player, page) {
+		Session.set("selected_page", page);
+		//TODO: set last page for user
+	}
+}
 
 
 // Nur Beispielhaft:

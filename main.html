@@ -1,10 +1,7 @@
 
 <head> 
-	<title>KickAss</title> 
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<link rel="stylesheet" href="jquery.min.css" />
-	<!--<link type="text/css" rel="stylesheet" media="screen" href="sidetap.css" />
-    <link type="text/css" rel="stylesheet" media="screen" href="default.css" />-->
+	<title>Kickers KickAss</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head> 
 
 <body> 
@@ -23,36 +20,47 @@
 
 
 <template name="tPage">
-	<div id="kacontent">	
-		<div class="ui-grid-a">
-			<div class="ui-block-a inner">
-				<ul data-role="listview" id="navbar" data-theme="a">
-					<li data-icon="false"><a href="#game" data-transition="slide">Game</a></li>
-					<li data-icon="false"><a href="#highscore">Highscore</a></li>
-					<li data-icon="false"><a href="#profile">Profile</a></li>
+	
+	
+	<!--<div class="ui-block-a inner">
+		<ul data-role="listview" id="navbar" data-theme="a">
+			<li data-icon="false"><a href="#game" data-transition="slide">Game</a></li>
+			<li data-icon="false"><a href="#highscore">Highscore</a></li>
+			<li data-icon="false"><a href="#profile">Profile</a></li>
+		</ul>
+	</div>-->
+	
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+			  <a class="brand" href="#">
+				{{#if isLoggedIn}}
+					{{getPageName}}
+				{{else}}
+					Login
+				{{/if}}
+			  </a>
+			  <div class="nav-collapse collapse">
+				<p class="navbar-text pull-right">
+				  Logged in as <a href="#" class="navbar-link">Username</a>
+				</p>
+				<ul class="nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#contact">Contact</a></li>
 				</ul>
+			  </div><!--/.nav-collapse -->
 			</div>
-			<div class="ui-block-b">
-				<div data-role="header">
-					{{#if isLoggedIn}}
-						<a href="#" id="menu" data-icon="option">Menu</a>			
-					{{/if}}	
-					<h1>
-					{{#if isLoggedIn}}
-						{{getPageName}}
-					{{else}}
-						Login
-					{{/if}}						
-					</h1>
-					{{#if isLoggedIn}}
-						<a href="#" data-icon="grid" id="logout" data-corners="false">Logout</a>
-					{{/if}}	
-				</div>
-				<div data-role="content">
-					{{> tPageSwitch}}									
-				</div>
-			</div>	   
-		</div>	
+		</div>
+	</div>
+	
+	<div id="pageSwitch">
+		{{> tPageSwitch}}			
 	</div>
 </template>
 
@@ -61,6 +69,7 @@
 	{{#unless isLoggedIn}}
 		{{> tLogin }}
 	{{/unless}}
+	
 	{{#if isLoggedIn}}
 		{{#if isPage "game"}}
 			{{> tKicker }}
@@ -117,22 +126,58 @@
 
 
 <template name="tLogin">
-	<div class="c_tLogin" id="tLogin">
-		<div data-role="collapsible" data-theme="a" data-content-theme="a" id="login" class="login">
-				<h3>New Kicker</h3>
-				<label for="name">Name:</label>
-				<input type="text" name="name" id="name" value="" />
-				<label for="pwd">Password:</label>
-				<input type="password" name="pwd" id="pwd" value="" />
-				<input type="submit" name="name" id="submitNewPlayer" value="Speichern und Anmelden" />
-		</div>
-		<ul data-role="listview" data-inset="true" data-filter="true" id="playerlistlogin">	
-				
-		{{#each getPlayers}}			
-			{{> tPlayerShort }}		  
-		{{/each}}
-		</ul>
-	</div>
+	
+	<div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+          
+          <div class="row-fluid">
+            <div class="span3">
+              <!-- placeholder-->
+            </div><!--/span-->
+            <div class="span6">
+			
+              <form class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">Email</label>
+					<div class="controls">
+						<input type="text" id="inputEmail" placeholder="Email">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputPassword">Password</label>
+					<div class="controls">
+					  <input type="password" id="inputPassword" placeholder="Password">
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+					  <label class="checkbox">
+							<input type="checkbox"> Remember me
+					  </label>
+					  <button type="submit" class="btn">Sign in</button>
+					</div>
+				</div>
+			</form>
+			
+            </div><!--/span-->
+            <div class="span3">
+			
+              <!-- placeholder-->
+			  
+            </div><!--/span-->
+          </div><!--/row-->
+          
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
 </template>
 
 

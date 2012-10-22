@@ -1,6 +1,11 @@
 /* CSS declarations go here */
 
-.kicker {
+div#pageSwitch {
+	margin-top: 50px;
+}
+
+
+/*.kicker {
 margin: 10px;
 padding: 10px;
 border: 2px solid;
@@ -32,4 +37,4 @@ div.ui-block-a ul li {
 
 div.ui-block-a  {
   top:0px !important;
-}
+}*/

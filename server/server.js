@@ -33,15 +33,10 @@ if (Meteor.is_server) {
 		}
 	);
 	
-	var callM = function() {
-		var l = LoggedIn.findOne({});
-		if (l) {
-			console.log("player: " + logged.player.name); 		
-		} else {
-			console.log("NO player"); 		
-		}
-		
-	};
+	
+	
+	
+	
 	Meteor.startup(function () {
 		//callM();
 		//LoggedIn.remove({time: {$lt:new Date()}});
