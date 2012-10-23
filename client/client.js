@@ -17,9 +17,8 @@ if (Meteor.is_client) {
 	Template.tPage.events = {
 		'click ul#navbar a': 	function (e) {
 			var page = e.target.href.substr(e.target.href.indexOf('#')+1, e.target.href.size);
-			toggleNav();
 			var p = Session.get("selected_player");
-			Player.changePage(p, page);			
+			Page.change(p, page);			
 		}
 	};	
 	
@@ -29,6 +28,7 @@ if (Meteor.is_client) {
 	
 	
 	Template.tPage.isLoggedIn = function () {
+		//TODO
 		return false;
 	};
 	
@@ -64,11 +64,15 @@ if (Meteor.is_client) {
 	
 	/**** TEMPLATE: tLogin ****/
 	Template.tLogin.getPlayers = function () {
-		return Player.getAllPlayers();	
+		//TODO
+		//return Player.getAllPlayers();	
 	};
 	
  
 	Template.tLogin.events = {
+		'click button.loginBtn': 	function (e) {
+			console.log(e);//TODO
+		},
 		'click a.login': 	function (e) {
 			var id = e.target.id;
 			logPlayerIn(id);			
